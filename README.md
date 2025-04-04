@@ -1,70 +1,121 @@
-# simulador-ai-v3
+# Simulador de Aposentadoria
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+O Simulador de Aposentadoria é uma aplicação moderna e profissional desenvolvida com Quarkus para auxiliar servidores públicos a calcular o tempo de contribuição e simular diferentes cenários de aposentadoria de acordo com as regras previdenciárias vigentes.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## Funcionalidades
 
-## Running the application in dev mode
+- Cadastro de usuários com dados pessoais e profissionais
+- Gerenciamento de períodos de serviço (averbação de tempo)
+- Conversão de tempo especial (insalubre) para tempo comum
+- Simulação de diferentes regras de aposentadoria:
+  - Regra permanente
+  - Regras de transição (pontos e pedágio)
+  - Regras especiais (professor, policial, insalubridade)
+- Cálculo de percentual de benefício e valor estimado
+- Histórico de simulações
 
-You can run your application in dev mode that enables live coding using:
+## Tecnologias
 
-```shell script
+- Quarkus 3.x
+- Java 21
+- Hibernate ORM com Panache
+- RESTEasy Reactive
+- PostgreSQL
+- SmallRye OpenAPI e Swagger UI
+- MicroProfile
+
+## Requisitos
+
+- JDK 21
+- Maven 3.8.6+
+- PostgreSQL 13+
+
+## Configuração do Banco de Dados
+
+Antes de executar a aplicação, é necessário criar o banco de dados:
+
+```sql
+CREATE DATABASE simulador_aposentadoria;
+CREATE DATABASE simulador_aposentadoria_test;
+```
+
+As tabelas serão criadas automaticamente pela aplicação.
+
+## Execução em Modo de Desenvolvimento
+
+Para executar a aplicação em modo de desenvolvimento, use o comando:
+
+```shell
 ./mvnw quarkus:dev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+A aplicação estará disponível em http://localhost:8080
 
-## Packaging and running the application
+A interface Swagger UI estará disponível em http://localhost:8080/swagger para testar as APIs.
 
-The application can be packaged using:
+## Estrutura da API
 
-```shell script
+### Usuários
+- `GET /api/usuarios` - Lista todos os usuários
+- `GET /api/usuarios/{id}` - Busca um usuário pelo ID
+- `POST /api/usuarios` - Cria um novo usuário
+- `PUT /api/usuarios/{id}` - Atualiza um usuário existente
+- `DELETE /api/usuarios/{id}` - Remove um usuário
+
+### Períodos de Serviço
+- `GET /api/periodos-servico/usuario/{id}` - Lista períodos de serviço de um usuário
+- `POST /api/periodos-servico` - Adiciona um novo período de serviço
+- `PUT /api/periodos-servico/{id}` - Atualiza um período de serviço
+- `DELETE /api/periodos-servico/{id}` - Remove um período de serviço
+- `POST /api/periodos-servico/{id}/converter-tempo` - Converte tempo especial
+- `GET /api/periodos-servico/usuario/{id}/tempo-total` - Calcula tempo total de serviço
+
+### Simulador
+- `GET /api/simulador` - Testa se o serviço está disponível
+- `POST /api/simulador/executar` - Executa uma simulação de aposentadoria
+- `GET /api/simulador/usuario/{id}/simulacoes` - Lista simulações de um usuário
+- `GET /api/simulador/simulacao/{id}` - Busca uma simulação pelo ID
+
+## Empacotamento e Execução da Aplicação
+
+A aplicação pode ser empacotada usando:
+
+```shell
 ./mvnw package
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+O arquivo `quarkus-run.jar` será gerado no diretório `target/quarkus-app/`.
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+A aplicação pode ser executada com:
 
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+```shell
+java -jar target/quarkus-app/quarkus-run.jar
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+## Criando um Executável Nativo
 
-## Creating a native executable
+É possível criar um executável nativo utilizando GraalVM:
 
-You can create a native executable using:
-
-```shell script
+```shell
 ./mvnw package -Dnative
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+Ou, se não tiver o GraalVM instalado, você pode executar a compilação em um container:
 
-```shell script
+```shell
 ./mvnw package -Dnative -Dquarkus.native.container-build=true
 ```
 
-You can then execute your native executable with: `./target/simulador-ai-v3-1.0-SNAPSHOT-runner`
+O executável nativo pode ser executado com:
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+```shell
+./target/simulador-aposentadoria-1.0.0-runner
+```
 
-## Related Guides
+## Próximos Passos
 
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and
-  Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on
-  it.
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus
-  REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-
-## Provided Code
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+- Implementação de autenticação JWT
+- Interface de usuário com React ou Angular
+- Geração de relatórios em PDF
+- Dashboard com estatísticas de simulações
+- Notificações por email para prazos de aposentadoria

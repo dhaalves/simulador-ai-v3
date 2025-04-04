@@ -1,0 +1,269 @@
+/* General Styles */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #475569;
+    --success-color: #16a34a;
+    --danger-color: #dc2626;
+    --warning-color: #f59e0b;
+    --info-color: #0891b2;
+    --light-color: #f8fafc;
+    --dark-color: #1e293b;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #f8fafc;
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Navbar */
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+/* Stepper */
+.stepper-container {
+    overflow-x: auto;
+    padding: 20px 0;
+}
+
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 600px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #e2e8f0;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-bottom: 8px;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s;
+}
+
+.step.active .step-icon {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.step.complete .step-icon {
+    background-color: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+
+.step-text {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.step.active .step-text,
+.step.complete .step-text {
+    color: #334155;
+    font-weight: 600;
+}
+
+.connector {
+    flex: 1;
+    height: 3px;
+    background-color: #e2e8f0;
+    margin: 0 10px;
+    margin-top: -33px;
+    z-index: 0;
+    transition: all 0.3s;
+}
+
+.connector.active {
+    background-color: var(--success-color);
+}
+
+/* Features Section */
+.features {
+    margin-top: 30px;
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+}
+
+/* Retirement Rules */
+.retirement-rules {
+    margin-top: 20px;
+}
+
+.rule-card {
+    background-color: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s;
+    cursor: pointer;
+    height: 100%;
+}
+
+.rule-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.rule-card.active {
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.rule-card h5 {
+    color: #1e293b;
+    margin-bottom: 10px;
+}
+
+.rule-card p {
+    color: #64748b;
+    margin-bottom: 0;
+    font-size: 0.875rem;
+}
+
+.rule-card.active h5 {
+    color: var(--primary-color);
+}
+
+/* Result Page */
+.result-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 3rem;
+}
+
+.result-icon.eligible {
+    background-color: rgba(22, 163, 74, 0.1);
+    color: var(--success-color);
+}
+
+.result-icon.ineligible {
+    background-color: rgba(220, 38, 38, 0.1);
+    color: var(--danger-color);
+}
+
+/* Benefit Gauge */
+.benefit-gauge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.gauge-container {
+    width: 160px;
+    height: 80px;
+    position: relative;
+}
+
+.gauge {
+    width: 160px;
+    height: 80px;
+    border-radius: 80px 80px 0 0;
+    background-color: #e2e8f0;
+    overflow: hidden;
+    position: relative;
+}
+
+.gauge-fill {
+    width: 160px;
+    height: 80px;
+    border-radius: 80px 80px 0 0;
+    background: linear-gradient(to right, #f97316, #16a34a);
+    transform-origin: bottom center;
+    transform: rotate(0turn);
+    transition: transform 1s ease-out;
+}
+
+.gauge-center {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.gauge-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1e293b;
+}
+
+.gauge-label {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+/* Profile Page */
+.profile-avatar {
+    font-size: 5rem;
+    color: var(--primary-color);
+}
+
+/* Footer */
+.footer {
+    margin-top: 50px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.footer h5 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #1e293b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .home-image-container {
+        margin-top: 2rem;
+    }
+}
+
+/* Modal */
+.modal-backdrop {
+    background-color: rgba(15, 23, 42, 0.7);
+}
