@@ -37,7 +37,6 @@ const app = createApp({
         const simulacoes = ref([]);
         
         // UI state
-        const showAddPeriodModal = ref(false);
         const selectedRule = ref('REGRA_PERMANENTE');
         
         // Example simulation result
@@ -171,12 +170,20 @@ const app = createApp({
             periodoForm.numeroPortaria = '';
             periodoForm.insalubridade = false;
             
-            // Close modal
-            showAddPeriodModal.value = false;
+            // Close modal using Bootstrap's API
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addPeriodModal'));
+            if (modal) {
+                modal.hide();
+            }
             
-            // Show a modal to confirm the period was added
-            // In a real app, we would use a proper modal or toast component
+            // Show a confirmation that the period was added
             alert('Período adicionado com sucesso!');
+        }
+        
+        function showAddPeriodModal() {
+            const modalElement = document.getElementById('addPeriodModal');
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
         }
         
         function editPeriodo(index) {
@@ -192,7 +199,11 @@ const app = createApp({
             
             // We would remove the old period and add the updated one when the user saves
             periodos.value.splice(index, 1);
-            showAddPeriodModal.value = true;
+            
+            // Show modal
+            const modalElement = document.getElementById('addPeriodModal');
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
         }
         
         function deletePeriodo(index) {
@@ -345,14 +356,14 @@ const app = createApp({
                 }
             ];
             
-            // Initialize Bootstrap components
-            // In a real app, this would be handled differently (e.g., using Vue plugins)
-            setTimeout(() => {
-                const modals = document.querySelectorAll('.modal');
-                modals.forEach(modal => {
-                    new bootstrap.Modal(modal);
-                });
-            }, 500);
+            // Initialize Bootstrap modals
+            document.addEventListener('DOMContentLoaded', function() {
+                // Ensure all modals are properly initialized
+                const modalEl = document.getElementById('addPeriodModal');
+                if (modalEl) {
+                    new bootstrap.Modal(modalEl);
+                }
+            });
         });
         
         // Return values and functions for the template
@@ -363,7 +374,6 @@ const app = createApp({
             periodoForm,
             periodos,
             simulacoes,
-            showAddPeriodModal,
             selectedRule,
             simulation,
             formatDate,
@@ -374,6 +384,7 @@ const app = createApp({
             calcularTempo,
             calcularTempoTotal,
             adicionarPeriodo,
+            showAddPeriodModal,
             editPeriodo,
             deletePeriodo,
             executarSimulacao,
